@@ -21,9 +21,9 @@ export function LatestPost() {
   return (
     <div className="w-full max-w-xs">
       {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
+        <p className="truncate">Your most recent note: {latestPost.name}</p>
       ) : (
-        <p>You have no posts yet.</p>
+        <p>You have no notes yet.</p>
       )}
       <form
         onSubmit={(e) => {
@@ -59,15 +59,14 @@ const PostList = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>Posts</h1>
+    <div className="flex flex-col items-center rounded-xl bg-white/10 p-4 text-white">
+      <h1 className="text-2xl font-bold">Notes</h1>
       <ul>
         {posts?.map((post: Post) => (
           <li key={post.id}>
-            <h2>{post.name}</h2>
-            <p>
-              Created At:{" "}
-              {new Date(Number(post.createdAt) * 1000).toLocaleString()}
+            <h2 className="text-xl">{post.name}</h2>
+            <p className="text-sm text-gray-400">
+              Created At: {new Date(Number(post.createdAt)).toLocaleString()}
             </p>
           </li>
         ))}
