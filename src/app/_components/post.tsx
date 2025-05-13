@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
+import React from "react";
 import { api } from "~/trpc/react";
+import type { inferRouterOutputs } from "@trpc/server";
+import type { AppRouter } from "../../server/api/root";
 
 export function LatestPost() {
   const [latestPost] = api.post.getLatest.useSuspenseQuery();
@@ -48,3 +50,30 @@ export function LatestPost() {
     </div>
   );
 }
+
+type Post = inferRouterOutputs<AppRouter>["post"]["getAll"][number];
+
+const PostList = () => {
+  const { data: posts, isLoading } = api.post.getAll.useQuery();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {posts?.map((post: Post) => (
+          <li key={post.id}>
+            <h2>{post.name}</h2>
+            <p>
+              Created At:{" "}
+              {new Date(Number(post.createdAt) * 1000).toLocaleString()}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default PostList;

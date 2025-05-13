@@ -1,10 +1,11 @@
 import Link from "next/link";
+import PostList from "./_components/post";
 
 import { LatestPost } from "~/app/_components/post";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+  const hello = await api.post.hello({ text: "from the other side" });
 
   void api.post.getLatest.prefetch();
 
@@ -46,6 +47,7 @@ export default async function Home() {
           </div>
 
           <LatestPost />
+          <PostList />
         </div>
       </main>
     </HydrateClient>
