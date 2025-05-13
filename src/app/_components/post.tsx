@@ -34,7 +34,7 @@ export function LatestPost() {
       >
         <input
           type="text"
-          placeholder="Title"
+          placeholder="Message"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full rounded-full bg-white/10 px-4 py-2 text-white"
